@@ -3,8 +3,6 @@ Command line interface to interact with Amazon S3. The idea is to be able to per
 all S3 commands using the command-line as browser access is limited on Linux virtual
 machines.
 
-Writing another command line i
-
 ## Similar Projects
 
 One similar project I know of is `s3cmd` from http://s3tools.org. One major drawback
