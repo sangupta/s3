@@ -20,7 +20,7 @@ import com.sangupta.s3.S3Command;
 @Command(name = "get", description = "Downlaod a file from the S3 bucket")
 public class GetFile extends S3Command {
 	
-	@Arguments(description = "A space separated list of files/keys that need to be downlaoded")
+	@Arguments(description = "A space separated list of files/keys that need to be downloaded")
 	private List<String> filesToDownload;
 
 	@Override
