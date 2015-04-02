@@ -15,7 +15,7 @@ import com.sangupta.s3.S3Command;
 @Command(name = "cp", description = "Copy file from one S3 bucket to another")
 public class CopyFile extends S3Command {
 	
-	@Arguments
+	@Arguments(description = "Two keys are required, the first one name of an existing file, and second the name of new file to be written")
 	private List<String> filesToCopy;
 
 	@Override

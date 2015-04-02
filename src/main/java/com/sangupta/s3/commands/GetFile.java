@@ -20,12 +20,12 @@ import com.sangupta.s3.S3Command;
 @Command(name = "get", description = "Upload a file to the S3 bucket")
 public class GetFile extends S3Command {
 	
-	@Arguments
-	private List<String> filesToUpload;
+	@Arguments(description = "A space separated list of files/keys that need to be downlaoded")
+	private List<String> filesToDownload;
 
 	@Override
 	protected void execute() {
-		if(AssertUtils.isEmpty(this.filesToUpload)) {
+		if(AssertUtils.isEmpty(this.filesToDownload)) {
 			System.out.println("Specify the file(s) to be downloaded.");
 			return;
 		}
@@ -35,7 +35,7 @@ public class GetFile extends S3Command {
 		
 		S3Object result = null;
 		try {
-			for(String key : this.filesToUpload) {
+			for(String key : this.filesToDownload) {
 				result = s3Client.getObject(this.baseBucketPath, key); 
 				boolean downloaded = false;
 				

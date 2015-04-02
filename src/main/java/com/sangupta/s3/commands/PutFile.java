@@ -17,7 +17,7 @@ import com.sangupta.s3.S3Command;
 @Command(name = "put", description = "Upload a file to the S3 bucket")
 public class PutFile extends S3Command {
 	
-	@Arguments
+	@Arguments(description = "A space delimited list of filename that need to be uploaded to S3")
 	private List<String> filesToUpload;
 
 	@Override

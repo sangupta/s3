@@ -3,6 +3,8 @@ package com.sangupta.s3;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Cli.CliBuilder;
 import io.airlift.airline.Help;
+import io.airlift.airline.ParseArgumentsMissingException;
+import io.airlift.airline.ParseArgumentsUnexpectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,20 @@ public class S3Main {
 		
 		// run on args
 		Cli<Runnable> gitParser = builder.build();
-        gitParser.parse(args).run();
+        Runnable runnable;
+        try {
+        	runnable = gitParser.parse(args);
+        	runnable.run();
+        } catch(ParseArgumentsMissingException e) {
+        	System.out.println("Mandatory params are missing. Run $ s3 --help for more information.");
+        	return;
+        } catch(ParseArgumentsUnexpectedException e) {
+        	// show help
+        	args = new String[] { "--help" };
+        	runnable = gitParser.parse(args);
+        	runnable.run();
+        	return;
+        }
 	}
 
 }
