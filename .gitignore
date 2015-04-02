@@ -38,3 +38,6 @@ target/*
 .settings/*
 /target
 /target/
+dependency-reduced-pom.xml
+.s3.config
+
