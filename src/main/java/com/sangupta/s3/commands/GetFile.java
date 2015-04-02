@@ -17,7 +17,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.sangupta.jerry.util.AssertUtils;
 import com.sangupta.s3.S3Command;
 
-@Command(name = "get", description = "Upload a file to the S3 bucket")
+@Command(name = "get", description = "Downlaod a file from the S3 bucket")
 public class GetFile extends S3Command {
 	
 	@Arguments(description = "A space separated list of files/keys that need to be downlaoded")
