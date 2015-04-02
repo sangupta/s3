@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-  
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sangupta</groupId>
@@ -74,7 +68,32 @@
 		    <groupId>org.slf4j</groupId>
 		    <artifactId>slf4j-nop</artifactId>
 		    <version>1.7.7</version>
-		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- command line parsing -->
+		<dependency>
+			<groupId>io.airlift</groupId>
+			<artifactId>airline</artifactId>
+			<version>0.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sangupta</groupId>
+			<artifactId>jerry-core</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		
+		<!-- AWS SDK -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.9.25</version>
 		</dependency>
 	</dependencies>
 	
@@ -85,49 +104,35 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			
-			<!-- Generate the project-javadoc.jar for OSS repository -->
+			<!-- Maven shade -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.2</version>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
 				<configuration>
-					<detectOfflineLinks>false</detectOfflineLinks>
-					<breakiterator>true</breakiterator>
-					<version>false</version>
-					<author>false</author>
-					<keywords>true</keywords>
+					<!-- put your configurations here -->
 				</configuration>
-			</plugin>
-
-			<!-- Generate the project-sources.jar for OSS repository -->
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
 				<executions>
-					<!-- ~ This workaround prevents Maven from executing the 'generate-sources' 
-						phase twice. ~ See http://jira.codehaus.org/browse/MSOURCES-13 ~ and http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html -->
 					<execution>
-						<id>attach-sources</id>
-						<phase>invalid</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>attach-sources-no-fork</id>
 						<phase>package</phase>
 						<goals>
-							<goal>jar-no-fork</goal>
+							<goal>shade</goal>
 						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>com.sangupta.s3.S3Main</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
 					</execution>
 				</executions>
-            </plugin>           
+			</plugin>         
 		</plugins>
 	</build>
 	
